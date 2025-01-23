@@ -177,18 +177,46 @@
                     <div class="projects-grid">
                         <div class="project-card holographic">
                             <div class="project-content">
-                                <i class="ri-shopping-bag-line project-icon"></i>
+                                <div class="project-header">
+                                    <i class="ri-shopping-bag-line project-icon"></i>
+                                    <div class="project-status">
+                                        <span class="status-dot active"></span>
+                                        Live
+                                    </div>
+                                </div>
                                 <h3>E-Commerce Platform</h3>
                                 <p>Full-stack e-commerce solution with real-time inventory and AI-powered recommendations.</p>
+                                <div class="project-stats">
+                                    <div class="stat-item">
+                                        <i class="ri-star-line"></i>
+                                        <span>128</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="ri-git-branch-line"></i>
+                                        <span>48</span>
+                                    </div>
+                                </div>
                                 <div class="project-tech">
-                                    <span>React</span>
-                                    <span>Node.js</span>
-                                    <span>MongoDB</span>
+                                    <span><i class="ri-reactjs-line"></i> React</span>
+                                    <span><i class="ri-nodejs-line"></i> Node.js</span>
+                                    <span><i class="ri-database-2-line"></i> MongoDB</span>
                                 </div>
                                 <div class="project-links">
-                                    <a href="#" class="project-link"><i class="ri-github-line"></i></a>
-                                    <a href="#" class="project-link"><i class="ri-external-link-line"></i></a>
+                                    <a href="#" class="project-link" data-tooltip="View Code"><i class="ri-github-line"></i></a>
+                                    <a href="#" class="project-link" data-tooltip="Live Demo"><i class="ri-external-link-line"></i></a>
                                 </div>
+                            </div>
+                            <div class="project-preview">
+                                <div class="preview-bar">
+                                    <i class="ri-circle-fill"></i>
+                                    <i class="ri-circle-fill"></i>
+                                    <i class="ri-circle-fill"></i>
+                                </div>
+                                <code class="preview-code">
+                                    <span class="code-line">const server = express();</span>
+                                    <span class="code-line">app.use(cors());</span>
+                                    <span class="code-line">connect(mongodb);</span>
+                                </code>
                             </div>
                         </div>
 
@@ -224,6 +252,63 @@
                                     <a href="#" class="project-link"><i class="ri-external-link-line"></i></a>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form Section -->
+                <div class="contact-section">
+                    <div class="section-header">
+                        <h2><i class="ri-mail-send-line"></i> GET IN TOUCH</h2>
+                        <div class="header-line"></div>
+                    </div>
+                    <div class="contact-container holographic">
+                        <div class="contact-content">
+                            <div class="contact-info">
+                                <h3>Let's Create Something Amazing</h3>
+                                <p>Have a project in mind? Let's discuss how we can work together.</p>
+                                <div class="contact-methods">
+                                    <div class="contact-method">
+                                        <i class="ri-map-pin-line"></i>
+                                        <span>San Francisco, CA</span>
+                                    </div>
+                                    <div class="contact-method">
+                                        <i class="ri-mail-line"></i>
+                                        <span>hello@alexparker.dev</span>
+                                    </div>
+                                    <div class="contact-method">
+                                        <i class="ri-time-line"></i>
+                                        <span>Response time: ~24hrs</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <form class="contact-form" id="contactForm">
+                                <div class="form-group">
+                                    <div class="input-container">
+                                        <i class="ri-user-line"></i>
+                                        <input type="text" id="name" required placeholder="Your Name">
+                                        <div class="input-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-container">
+                                        <i class="ri-mail-line"></i>
+                                        <input type="email" id="email" required placeholder="Your Email">
+                                        <div class="input-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-container">
+                                        <i class="ri-message-3-line"></i>
+                                        <textarea id="message" required placeholder="Your Message"></textarea>
+                                        <div class="input-focus"></div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="submit-button">
+                                    <span>SEND MESSAGE</span>
+                                    <i class="ri-send-plane-line"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
