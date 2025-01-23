@@ -489,4 +489,203 @@ body {
 .launch-info i {
   margin-left: 0.5rem;
   font-size: 1rem;
+}
+
+/* About & Skills Section */
+.about-section {
+  margin: 4rem 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.section-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  color: var(--color-space-dark);
+}
+
+.header-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(to right, var(--color-space-mint), transparent);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--color-space-dark);
+  margin-bottom: 2rem;
+}
+
+.quick-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-space-dark);
+  font-size: 0.9rem;
+}
+
+.info-item i {
+  color: var(--color-space-mint);
+  font-size: 1.2rem;
+}
+
+/* Skills Styling */
+.skills-group {
+  margin-bottom: 2rem;
+}
+
+.skills-group h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-space-dark);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.skill-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--color-space-dark);
+}
+
+.skill-item i {
+  color: var(--color-space-mint);
+  font-size: 1.2rem;
+}
+
+.skill-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(124, 255, 208, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.skill-level {
+  height: 100%;
+  background: var(--color-space-mint);
+  border-radius: 2px;
+  animation: skillFill 1.5s ease-out forwards;
+}
+
+@keyframes skillFill {
+  from { width: 0; }
+}
+
+/* Projects Section */
+.projects-section {
+  margin: 4rem 0;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.project-card {
+  background: var(--color-space-light);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-content {
+  padding: 2rem;
+}
+
+.project-icon {
+  font-size: 2.5rem;
+  color: var(--color-space-mint);
+  margin-bottom: 1rem;
+}
+
+.project-content h3 {
+  color: var(--color-space-dark);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.project-content p {
+  color: rgba(10, 10, 11, 0.6);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.project-tech {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.project-tech span {
+  background: rgba(124, 255, 208, 0.1);
+  color: var(--color-space-dark);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+}
+
+.project-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.project-link {
+  color: var(--color-space-dark);
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+.project-link:hover {
+  color: var(--color-space-mint);
+}
+
+/* Update existing holographic effect for project cards */
+.project-card.holographic::before {
+  background: linear-gradient(45deg, rgba(124, 255, 208, 0.1), rgba(124, 255, 208, 0));
+}
+
+.project-card.holographic::after {
+  background: radial-gradient(circle, rgba(124, 255, 208, 0.05) 0%, rgba(124, 255, 208, 0) 70%);
 } 

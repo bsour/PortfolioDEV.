@@ -83,6 +83,74 @@ document.addEventListener('DOMContentLoaded', () => {
         developerImage.style.setProperty('--y', `${y * 100}%`);
     });
 
+    // Skill Bars Animation
+    const skillLevels = document.querySelectorAll('.skill-level');
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px'
+    };
+
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.width = entry.target.parentElement.dataset.level || '0%';
+                skillObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    skillLevels.forEach(skill => {
+        skillObserver.observe(skill);
+    });
+
+    // Project Cards Animation
+    const projectCards = document.querySelectorAll('.project-card');
+    const projectObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                projectObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    projectCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        projectObserver.observe(card);
+    });
+
+    // Enhanced Holographic Effect for Project Cards
+    projectCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = card.getBoundingClientRect();
+            const x = (e.clientX - left) / width;
+            const y = (e.clientY - top) / height;
+
+            const shine = card.querySelector('.project-content');
+            if (shine) {
+                shine.style.background = `
+                    radial-gradient(
+                        circle at ${x * 100}% ${y * 100}%,
+                        rgba(124, 255, 208, 0.1) 0%,
+                        rgba(124, 255, 208, 0) 50%
+                    )
+                `;
+            }
+        });
+
+        card.addEventListener('mouseleave', () => {
+            const shine = card.querySelector('.project-content');
+            if (shine) {
+                shine.style.background = 'none';
+            }
+        });
+    });
+
     // Initialize counter
     updateCounter();
 }); 
