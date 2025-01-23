@@ -120,15 +120,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Holographic Effect Enhancement
-    const developerImage = document.querySelector('.astronaut-image');
-    developerImage.addEventListener('mousemove', (e) => {
-        const { left, top, width, height } = developerImage.getBoundingClientRect();
-        const x = (e.clientX - left) / width;
-        const y = (e.clientY - top) / height;
+    const developerEmoji = document.querySelector('.developer-emoji');
+    if (developerEmoji) {
+        developerEmoji.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = developerEmoji.getBoundingClientRect();
+            const x = (e.clientX - left) / width;
+            const y = (e.clientY - top) / height;
 
-        developerImage.style.setProperty('--x', `${x * 100}%`);
-        developerImage.style.setProperty('--y', `${y * 100}%`);
-    });
+            developerEmoji.style.setProperty('--x', `${x * 100}%`);
+            developerEmoji.style.setProperty('--y', `${y * 100}%`);
+        });
+    }
 
     // Enhanced Project Cards Animation
     const projectCards = document.querySelectorAll('.project-card');
@@ -329,51 +331,63 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function simulateDownload() {
-        if (downloadButton.classList.contains('downloading')) return;
-        
-        downloadButton.classList.add('downloading');
-        
-        setTimeout(() => {
-            downloadButton.classList.remove('downloading');
-            downloadButton.classList.add('success');
-            createParticles();
+    async function startDownload() {
+        try {
+            const response = await fetch('/Sourabh-Beniwal-Software Engineer Full Stack copy.pdf');
+            if (!response.ok) throw new Error('Download failed');
             
-            // Reset button state
-            setTimeout(() => {
-                downloadButton.classList.remove('success');
-            }, 2000);
-        }, 2000);
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'Sourabh-Beniwal-Resume.pdf';
+            
+            document.body.appendChild(a);
+            a.click();
+            
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            
+            return true;
+        } catch (error) {
+            console.error('Download error:', error);
+            return false;
+        }
     }
 
     if (downloadButton) {
-        downloadButton.addEventListener('click', () => {
-            simulateDownload();
+        downloadButton.addEventListener('click', async () => {
+            if (downloadButton.classList.contains('downloading')) return;
             
-            // Actual download logic
-            const resumeUrl = './Sourabh-Beniwal-Software Engineer Full Stack copy.pdf';
+            downloadButton.classList.add('downloading');
             
-            fetch(resumeUrl)
-                .then(response => response.blob())
-                .then(blob => {
-                    const blobUrl = window.URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = blobUrl;
-                    link.download = 'Sourabh-Beniwal-Resume.pdf';
-                    document.body.appendChild(link);
-                    link.click();
-                    window.URL.revokeObjectURL(blobUrl);
-                    document.body.removeChild(link);
-                })
-                .catch(error => {
-                    console.error('Error downloading resume:', error);
-                    // Show error state
+            try {
+                const success = await startDownload();
+                
+                setTimeout(() => {
                     downloadButton.classList.remove('downloading');
-                    downloadButton.classList.add('error');
-                    setTimeout(() => {
-                        downloadButton.classList.remove('error');
-                    }, 2000);
-                });
+                    if (success) {
+                        downloadButton.classList.add('success');
+                        createParticles();
+                        setTimeout(() => {
+                            downloadButton.classList.remove('success');
+                        }, 2000);
+                    } else {
+                        downloadButton.classList.add('error');
+                        setTimeout(() => {
+                            downloadButton.classList.remove('error');
+                        }, 2000);
+                    }
+                }, 2000);
+            } catch (error) {
+                console.error('Error:', error);
+                downloadButton.classList.remove('downloading');
+                downloadButton.classList.add('error');
+                setTimeout(() => {
+                    downloadButton.classList.remove('error');
+                }, 2000);
+            }
         });
     }
 }); 
