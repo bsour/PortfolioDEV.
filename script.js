@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
         skillObserver.observe(skill);
     });
 
-    // Contact Form Handling
+    // Contact Form Handling with Enhanced Effects
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         const inputs = contactForm.querySelectorAll('input, textarea');
@@ -286,13 +286,45 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Form submission
+        // Create particles function (reusing from download button)
+        function createParticles(button) {
+            const particles = 12;
+            const colors = ['#7CFFD0', '#FFFFFF'];
+            
+            for (let i = 0; i < particles; i++) {
+                const particle = document.createElement('span');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 8 + 4;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                const angle = (i / particles) * 360;
+                const distance = Math.random() * 80 + 60;
+                const tx = Math.cos(angle * Math.PI / 180) * distance;
+                const ty = Math.sin(angle * Math.PI / 180) * distance;
+                
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                
+                button.appendChild(particle);
+                
+                requestAnimationFrame(() => {
+                    particle.style.animation = 'particleAnimation 1s ease-out forwards';
+                    setTimeout(() => particle.remove(), 1000);
+                });
+            }
+        }
+
+        // Form submission with enhanced effects
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitButton = contactForm.querySelector('.submit-button');
             const originalText = submitButton.innerHTML;
 
-            // Simulate sending
+            // Add sending state
+            submitButton.classList.add('sending');
             submitButton.innerHTML = '<i class="ri-loader-4-line"></i> SENDING...';
             submitButton.disabled = true;
 
@@ -300,26 +332,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Simulate API call
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 
-                // Success state
+                // Success state with particles
+                submitButton.classList.remove('sending');
+                submitButton.classList.add('success');
                 submitButton.innerHTML = '<i class="ri-check-line"></i> SENT!';
-                submitButton.style.backgroundColor = '#4CAF50';
+                createParticles(submitButton);
                 
                 // Reset form
                 setTimeout(() => {
                     contactForm.reset();
                     submitButton.innerHTML = originalText;
                     submitButton.disabled = false;
-                    submitButton.style.backgroundColor = '';
+                    submitButton.classList.remove('success');
                 }, 3000);
             } catch (error) {
-                // Error state
+                // Error state with shake animation
+                submitButton.classList.remove('sending');
+                submitButton.classList.add('error');
                 submitButton.innerHTML = '<i class="ri-error-warning-line"></i> FAILED';
-                submitButton.style.backgroundColor = '#f44336';
                 
                 setTimeout(() => {
                     submitButton.innerHTML = originalText;
                     submitButton.disabled = false;
-                    submitButton.style.backgroundColor = '';
+                    submitButton.classList.remove('error');
                 }, 3000);
             }
         });
@@ -331,39 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Download Button Animation
     const downloadButton = document.querySelector('.download-button');
     
-    function createParticles() {
-        const particles = 12;
-        const colors = ['#7CFFD0', '#FFFFFF'];
-        
-        for (let i = 0; i < particles; i++) {
-            const particle = document.createElement('span');
-            particle.className = 'particle';
-            
-            // Random particle styling - increased size for more visibility
-            const size = Math.random() * 8 + 4; // Increased from 4+2 to 8+4
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-            
-            // Random particle animation - increased distance
-            const angle = (i / particles) * 360;
-            const distance = Math.random() * 80 + 60; // Increased from 60+40 to 80+60
-            const tx = Math.cos(angle * Math.PI / 180) * distance;
-            const ty = Math.sin(angle * Math.PI / 180) * distance;
-            
-            particle.style.setProperty('--tx', `${tx}px`);
-            particle.style.setProperty('--ty', `${ty}px`);
-            
-            downloadButton.appendChild(particle);
-            
-            // Animate and remove particle - increased duration
-            requestAnimationFrame(() => {
-                particle.style.animation = 'particleAnimation 1s ease-out forwards'; // Increased from 0.7s to 1s
-                setTimeout(() => particle.remove(), 1000);
-            });
-        }
-    }
-
     async function startDownload() {
         // Return a promise that resolves after both the animation and download are complete
         return new Promise(async (resolve) => {
@@ -407,7 +409,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 downloadButton.classList.remove('downloading');
                 if (success) {
                     downloadButton.classList.add('success');
-                    createParticles();
                     setTimeout(() => {
                         downloadButton.classList.remove('success');
                     }, 2000);
