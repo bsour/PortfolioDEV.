@@ -1381,7 +1381,7 @@ body {
 }
 
 .testimonial-card {
-  background: var(--color-space-dark);
+  background: var(--color-space-light);
   border-radius: 1rem;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(124, 255, 208, 0.1);
@@ -1470,7 +1470,7 @@ body {
 }
 
 .testimonial-info h4 {
-  color: var(--color-space-light);
+  color: var(--color-space-dark);
   font-size: 1rem;
   margin-bottom: 0.25rem;
 }
@@ -1482,7 +1482,7 @@ body {
 }
 
 .testimonial-text {
-  color: var(--color-space-light);
+  color: var(--color-space-dark);
   font-size: 0.9rem;
   line-height: 1.6;
   opacity: 0.9;
