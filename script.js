@@ -306,15 +306,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const particle = document.createElement('span');
             particle.className = 'particle';
             
-            // Random particle styling
-            const size = Math.random() * 4 + 2;
+            // Random particle styling - increased size for more visibility
+            const size = Math.random() * 8 + 4; // Increased from 4+2 to 8+4
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
             particle.style.background = colors[Math.floor(Math.random() * colors.length)];
             
-            // Random particle animation
+            // Random particle animation - increased distance
             const angle = (i / particles) * 360;
-            const distance = Math.random() * 60 + 40;
+            const distance = Math.random() * 80 + 60; // Increased from 60+40 to 80+60
             const tx = Math.cos(angle * Math.PI / 180) * distance;
             const ty = Math.sin(angle * Math.PI / 180) * distance;
             
@@ -323,37 +323,43 @@ document.addEventListener('DOMContentLoaded', () => {
             
             downloadButton.appendChild(particle);
             
-            // Animate and remove particle
+            // Animate and remove particle - increased duration
             requestAnimationFrame(() => {
-                particle.style.animation = 'particleAnimation 0.7s ease-out forwards';
-                setTimeout(() => particle.remove(), 700);
+                particle.style.animation = 'particleAnimation 1s ease-out forwards'; // Increased from 0.7s to 1s
+                setTimeout(() => particle.remove(), 1000);
             });
         }
     }
 
     async function startDownload() {
-        try {
-            const response = await fetch('/Sourabh-Beniwal-Software Engineer Full Stack copy.pdf');
-            if (!response.ok) throw new Error('Download failed');
+        // Return a promise that resolves after both the animation and download are complete
+        return new Promise(async (resolve) => {
+            // Wait for 2 seconds for the loader animation
+            await new Promise(r => setTimeout(r, 2000));
             
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = 'Sourabh-Beniwal-Resume.pdf';
-            
-            document.body.appendChild(a);
-            a.click();
-            
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
-            
-            return true;
-        } catch (error) {
-            console.error('Download error:', error);
-            return false;
-        }
+            try {
+                const response = await fetch('/Sourabh-Beniwal-Software Engineer Full Stack copy.pdf');
+                if (!response.ok) throw new Error('Download failed');
+                
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'Sourabh-Beniwal-Resume.pdf';
+                
+                document.body.appendChild(a);
+                a.click();
+                
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                resolve(true);
+            } catch (error) {
+                console.error('Download error:', error);
+                resolve(false);
+            }
+        });
     }
 
     if (downloadButton) {
@@ -365,21 +371,19 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const success = await startDownload();
                 
-                setTimeout(() => {
-                    downloadButton.classList.remove('downloading');
-                    if (success) {
-                        downloadButton.classList.add('success');
-                        createParticles();
-                        setTimeout(() => {
-                            downloadButton.classList.remove('success');
-                        }, 2000);
-                    } else {
-                        downloadButton.classList.add('error');
-                        setTimeout(() => {
-                            downloadButton.classList.remove('error');
-                        }, 2000);
-                    }
-                }, 2000);
+                downloadButton.classList.remove('downloading');
+                if (success) {
+                    downloadButton.classList.add('success');
+                    createParticles();
+                    setTimeout(() => {
+                        downloadButton.classList.remove('success');
+                    }, 2000);
+                } else {
+                    downloadButton.classList.add('error');
+                    setTimeout(() => {
+                        downloadButton.classList.remove('error');
+                    }, 2000);
+                }
             } catch (error) {
                 console.error('Error:', error);
                 downloadButton.classList.remove('downloading');
