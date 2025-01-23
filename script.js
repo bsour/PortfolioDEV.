@@ -414,42 +414,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Enhanced card interaction
     document.querySelectorAll('.testimonial-card').forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const { left, top, width, height } = card.getBoundingClientRect();
-            const x = (e.clientX - left) / width;
-            const y = (e.clientY - top) / height;
+        // Remove mousemove event listener
+        // Remove mouseleave event listener
+        
+        // Only keep the pause on hover functionality for the columns
+        const column = card.closest('.testimonial-column');
+        if (column) {
+            column.addEventListener('mouseover', () => {
+                column.style.animationPlayState = 'paused';
+            });
 
-            // Calculate rotation values
-            const tiltX = (y - 0.5) * 10;
-            const tiltY = (x - 0.5) * -10;
-
-            // Apply transform
-            card.style.transform = `
-                perspective(1000px) 
-                rotateX(${tiltX}deg) 
-                rotateY(${tiltY}deg) 
-                scale(1.1)
-            `;
-
-            // Add shine effect
-            const shine = card.querySelector('.testimonial-content');
-            if (shine) {
-                shine.style.background = `
-                    radial-gradient(
-                        circle at ${x * 100}% ${y * 100}%,
-                        rgba(124, 255, 208, 0.2) 0%,
-                        rgba(124, 255, 208, 0.05) 50%
-                    )
-                `;
-            }
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'scale(1)';
-            const shine = card.querySelector('.testimonial-content');
-            if (shine) {
-                shine.style.background = 'rgba(124, 255, 208, 0.05)';
-            }
-        });
+            column.addEventListener('mouseout', () => {
+                column.style.animationPlayState = 'running';
+            });
+        }
     });
 }); 

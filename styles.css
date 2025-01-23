@@ -1369,11 +1369,11 @@ body {
 }
 
 .testimonial-column.up {
-  animation: scrollUp 30s linear infinite;
+  animation: scrollUp 60s linear infinite;
 }
 
 .testimonial-column.down {
-  animation: scrollDown 30s linear infinite;
+  animation: scrollDown 60s linear infinite;
 }
 
 .testimonial-column:hover {
@@ -1381,20 +1381,18 @@ body {
 }
 
 .testimonial-card {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--color-space-dark);
   border-radius: 1rem;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(124, 255, 208, 0.1);
   min-height: 200px;
   margin-bottom: 2rem;
-  transform: scale(1);
-  transition: all 0.3s ease;
 }
 
 .testimonial-column:hover .testimonial-card:hover {
-  transform: scale(1.1);
-  z-index: 10;
-  box-shadow: 0 10px 30px rgba(124, 255, 208, 0.2);
+  transform: none;
+  z-index: auto;
+  box-shadow: none;
 }
 
 @keyframes scrollUp {
@@ -1417,8 +1415,8 @@ body {
 
 .testimonial-card:hover {
   animation-play-state: paused;
-  transform: scale(1.05);
-  z-index: 10;
+  transform: none;
+  z-index: auto;
 }
 
 .testimonial-content {
