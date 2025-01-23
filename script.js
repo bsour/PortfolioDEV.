@@ -39,20 +39,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Theme Toggle
     const themeToggle = document.querySelector('.theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
     const root = document.documentElement;
     let isDark = true;
 
     themeToggle.addEventListener('click', () => {
+        // Add switching class for animation
+        themeToggle.classList.add('switching');
+        
+        // Toggle theme
         isDark = !isDark;
+        
+        // Update icon and classes
         if (isDark) {
+            themeToggle.classList.remove('light-mode');
+            themeToggle.classList.add('dark-mode');
+            themeIcon.classList.remove('ri-sun-line');
+            themeIcon.classList.add('ri-moon-line');
             root.style.setProperty('--color-space-dark', '#0A0A0B');
             root.style.setProperty('--color-space-light', '#FFFFFF');
         } else {
+            themeToggle.classList.remove('dark-mode');
+            themeToggle.classList.add('light-mode');
+            themeIcon.classList.remove('ri-moon-line');
+            themeIcon.classList.add('ri-sun-line');
             root.style.setProperty('--color-space-dark', '#FFFFFF');
             root.style.setProperty('--color-space-light', '#0A0A0B');
         }
+        
+        // Update body colors
         document.body.style.backgroundColor = isDark ? '#0A0A0B' : '#FFFFFF';
         document.body.style.color = isDark ? '#FFFFFF' : '#0A0A0B';
+        
+        // Remove switching class after animation
+        setTimeout(() => {
+            themeToggle.classList.remove('switching');
+        }, 500);
+    });
+
+    // Add hover effect for theme indicator
+    themeToggle.addEventListener('mousemove', (e) => {
+        const rect = themeToggle.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const indicator = themeToggle.querySelector('.theme-indicator');
+        indicator.style.left = `${x - 12}px`;
+        indicator.style.top = `${y - 12}px`;
     });
 
     // Enhanced Navigation
