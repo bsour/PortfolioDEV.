@@ -16,20 +16,34 @@
             <!-- Navigation -->
             <nav class="nav-container">
                 <div class="nav-left">
-                    <button class="icon-button menu-icon">
+                    <button class="icon-button menu-icon mobile-only">
                         <i class="ri-menu-line"></i>
                     </button>
-                    <button class="icon-button search-icon">
-                        <i class="ri-search-line"></i>
-                    </button>
                 </div>
-                <div class="logo">DEV.</div>
+                <div class="logo">
+                    <span class="flip-text">D</span>
+                    <span class="flip-text">E</span>
+                    <span class="flip-text">V</span>
+                    <span class="flip-text">.</span>
+                </div>
                 <div class="nav-right">
+                    <div class="nav-links">
+                        <a href="#about" class="nav-link">ABOUT</a>
+                        <a href="#skills" class="nav-link">SKILLS</a>
+                        <a href="#projects" class="nav-link">PROJECTS</a>
+                    </div>
                     <div class="theme-toggle">
                         <i class="ri-moon-line"></i>
                         <div class="theme-indicator"></div>
                     </div>
                     <span class="contact-button">CONNECT</span>
+                </div>
+                <!-- Mobile Menu -->
+                <div class="mobile-menu">
+                    <a href="#about" class="mobile-link">ABOUT</a>
+                    <a href="#skills" class="mobile-link">SKILLS</a>
+                    <a href="#projects" class="mobile-link">PROJECTS</a>
+                    <a href="#contact" class="mobile-link">CONNECT</a>
                 </div>
             </nav>
 
@@ -55,9 +69,21 @@
                             </div>
                         </div>
 
-                        <button class="cta-button">
-                            <i class="ri-code-box-line"></i>
-                            VIEW PROJECTS
+                        <button class="cta-button download-button">
+                            <span class="button-content">
+                                <i class="ri-file-download-line"></i>
+                                <span class="button-text">DOWNLOAD RESUME</span>
+                            </span>
+                            <span class="download-progress">
+                                <svg class="progress-circle" viewBox="0 0 100 100">
+                                    <circle class="progress-circle-bg" cx="50" cy="50" r="45"/>
+                                    <circle class="progress-circle-path" cx="50" cy="50" r="45"/>
+                                </svg>
+                                <span class="download-status">
+                                    <i class="ri-check-line success-icon"></i>
+                                    <i class="ri-download-2-line download-icon"></i>
+                                </span>
+                            </span>
                         </button>
 
                         <div class="decorative-info">

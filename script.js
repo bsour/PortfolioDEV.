@@ -55,12 +55,59 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.color = isDark ? '#FFFFFF' : '#0A0A0B';
     });
 
-    // Mobile Menu
-    const menuButton = document.querySelector('.menu-icon');
+    // Enhanced Navigation
     const nav = document.querySelector('.nav-container');
+    const menuButton = document.querySelector('.menu-icon');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
 
+    // Handle mobile menu
     menuButton.addEventListener('click', () => {
-        nav.classList.toggle('nav-open');
+        nav.classList.toggle('menu-open');
+        mobileMenu.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking a link
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            nav.classList.remove('menu-open');
+            mobileMenu.classList.remove('active');
+        });
+    });
+
+    // Handle scroll behavior
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        // Add/remove scrolled class
+        if (currentScroll > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+
+        // Hide/show navbar on scroll
+        if (currentScroll > lastScroll && currentScroll > 100) {
+            nav.style.transform = 'translateY(-100%)';
+        } else {
+            nav.style.transform = 'translateY(0)';
+        }
+        lastScroll = currentScroll;
+    });
+
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
     });
 
     // Smooth Scroll for Contact Button
@@ -245,4 +292,88 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize counter
     updateCounter();
+
+    // Download Button Animation
+    const downloadButton = document.querySelector('.download-button');
+    
+    function createParticles() {
+        const particles = 12;
+        const colors = ['#7CFFD0', '#FFFFFF'];
+        
+        for (let i = 0; i < particles; i++) {
+            const particle = document.createElement('span');
+            particle.className = 'particle';
+            
+            // Random particle styling
+            const size = Math.random() * 4 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Random particle animation
+            const angle = (i / particles) * 360;
+            const distance = Math.random() * 60 + 40;
+            const tx = Math.cos(angle * Math.PI / 180) * distance;
+            const ty = Math.sin(angle * Math.PI / 180) * distance;
+            
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            
+            downloadButton.appendChild(particle);
+            
+            // Animate and remove particle
+            requestAnimationFrame(() => {
+                particle.style.animation = 'particleAnimation 0.7s ease-out forwards';
+                setTimeout(() => particle.remove(), 700);
+            });
+        }
+    }
+
+    function simulateDownload() {
+        if (downloadButton.classList.contains('downloading')) return;
+        
+        downloadButton.classList.add('downloading');
+        
+        setTimeout(() => {
+            downloadButton.classList.remove('downloading');
+            downloadButton.classList.add('success');
+            createParticles();
+            
+            // Reset button state
+            setTimeout(() => {
+                downloadButton.classList.remove('success');
+            }, 2000);
+        }, 2000);
+    }
+
+    if (downloadButton) {
+        downloadButton.addEventListener('click', () => {
+            simulateDownload();
+            
+            // Actual download logic
+            const resumeUrl = './Sourabh-Beniwal-Software Engineer Full Stack copy.pdf';
+            
+            fetch(resumeUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = blobUrl;
+                    link.download = 'Sourabh-Beniwal-Resume.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    window.URL.revokeObjectURL(blobUrl);
+                    document.body.removeChild(link);
+                })
+                .catch(error => {
+                    console.error('Error downloading resume:', error);
+                    // Show error state
+                    downloadButton.classList.remove('downloading');
+                    downloadButton.classList.add('error');
+                    setTimeout(() => {
+                        downloadButton.classList.remove('error');
+                    }, 2000);
+                });
+        });
+    }
 }); 
